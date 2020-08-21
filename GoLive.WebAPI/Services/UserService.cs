@@ -43,10 +43,11 @@ namespace GoLive.Services
             return new AuthenticateResponse(user, token);
         }
 
-        public bool CreateUser(User entity)
+        public string CreateUser(User entity)
         {
             _context.Users.Add(entity);
-            return _context.SaveChanges() == 1;
+            _context.SaveChanges();
+            return GenerateJwtToken(entity);
         }
 
         public IEnumerable<User> GetAll()

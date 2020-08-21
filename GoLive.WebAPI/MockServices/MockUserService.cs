@@ -13,9 +13,9 @@ namespace GoLive.MockServices
             throw new System.NotImplementedException();
         }
 
-        public bool CreateUser(User entity)
+        public string CreateUser(User entity)
         {
-            return true;
+            return "token";
         }
 
         public IEnumerable<User> GetAll()

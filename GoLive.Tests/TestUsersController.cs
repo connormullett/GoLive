@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using AutoMapper;
 using GoLive.Contracts;
 using GoLive.Controllers;
@@ -5,6 +6,7 @@ using GoLive.Helpers;
 using GoLive.MockServices;
 using GoLive.Models.Authenticate;
 using GoLive.Models.UserDtos;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GoLive.Tests
@@ -37,8 +39,10 @@ namespace GoLive.Tests
                 Password = "Test1!",
                 ConfirmPassword = "Test1!"
             };
-            var response = _controller.CreateUser(user);
-            Assert.IsInstanceOfType(response, typeof(AuthenticateResponse));
+            var response = _controller.CreateUser(user) as OkObjectResult;
+            var actual = response.Value as AuthenticateResponse;
+            Assert.IsInstanceOfType(actual, typeof(AuthenticateResponse));
+            Assert.AreEqual(actual.Token, "token");
         }
 
         [TestMethod]

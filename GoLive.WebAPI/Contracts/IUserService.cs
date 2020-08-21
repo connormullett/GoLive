@@ -11,6 +11,6 @@ namespace GoLive.Contracts
         AuthenticateResponse Authenticate(AuthenticateRequest model);
         IEnumerable<User> GetAll();
         Data.User GetById(Guid id);
-        bool CreateUser(User entity);
+        string CreateUser(User entity);
     }
 }

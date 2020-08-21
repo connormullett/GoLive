@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using GoLive.Models.UserDtos;
 using GoLive.Models.Authenticate;
+using System.Threading.Tasks;
 
 namespace GoLive.Controllers
 {
@@ -35,11 +36,9 @@ namespace GoLive.Controllers
 
             user.PasswordHash = _hasher.HashPassword(model.Password);
 
-            if (_userService.CreateUser(user))
-            {
-                return Ok();
-            }
-            return BadRequest();
+            var generatedToken = _userService.CreateUser(user);
+            var authResponse = new AuthenticateResponse(user, generatedToken);
+            return Ok(authResponse);
         }
 
         [HttpPost("authenticate")]
