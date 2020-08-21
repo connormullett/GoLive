@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoLive", "GoLive.WebAPI\GoLive.csproj", "{9AA459F1-29D1-468E-9239-2989E75847D4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoLive.Tests", "GoLive.Tests\GoLive.Tests.csproj", "{4F20F11B-2418-461A-9457-D9859C3AA736}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,17 @@ Global
 		{9AA459F1-29D1-468E-9239-2989E75847D4}.Release|x64.Build.0 = Release|Any CPU
 		{9AA459F1-29D1-468E-9239-2989E75847D4}.Release|x86.ActiveCfg = Release|Any CPU
 		{9AA459F1-29D1-468E-9239-2989E75847D4}.Release|x86.Build.0 = Release|Any CPU
+		{4F20F11B-2418-461A-9457-D9859C3AA736}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F20F11B-2418-461A-9457-D9859C3AA736}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F20F11B-2418-461A-9457-D9859C3AA736}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4F20F11B-2418-461A-9457-D9859C3AA736}.Debug|x64.Build.0 = Debug|Any CPU
+		{4F20F11B-2418-461A-9457-D9859C3AA736}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4F20F11B-2418-461A-9457-D9859C3AA736}.Debug|x86.Build.0 = Debug|Any CPU
+		{4F20F11B-2418-461A-9457-D9859C3AA736}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F20F11B-2418-461A-9457-D9859C3AA736}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F20F11B-2418-461A-9457-D9859C3AA736}.Release|x64.ActiveCfg = Release|Any CPU
+		{4F20F11B-2418-461A-9457-D9859C3AA736}.Release|x64.Build.0 = Release|Any CPU
+		{4F20F11B-2418-461A-9457-D9859C3AA736}.Release|x86.ActiveCfg = Release|Any CPU
+		{4F20F11B-2418-461A-9457-D9859C3AA736}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
