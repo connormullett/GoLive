@@ -3,11 +3,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace GoLive.Tests
 {
     [TestClass]
-    public class UnitTest1
+    public class UserDtoTests
     {
-        [TestMethod]
-        public void TestMethod1()
-        {
-        }
+        
     }
 }
