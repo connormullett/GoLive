@@ -21,17 +21,44 @@ namespace GoLive.Controllers
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
         private readonly PasswordHasher _hasher;
+        private readonly UserValidator _validator;
 
         public UsersController(IUserService userService, IMapper mapper)
         {
             _mapper = mapper;
             _userService = userService;
             _hasher = new PasswordHasher();
+            _validator = new UserValidator();
         }
 
         [HttpPost]
         public IActionResult CreateUser([FromBody]UserCreate model)
         {
+            try
+            {
+                _validator.ValidateUserCreate(model);
+            }
+            catch (PasswordMismatchException)
+            {
+                var response = new { message = "Password's do not match" };
+                return BadRequest(response);
+            }
+            catch (WeakPasswordException)
+            {
+                var response = new { message = "Password is too weak" };
+                return BadRequest(response);
+            }
+            catch (InvalidEmailException)
+            {
+                var response = new { message = "Email must be valid email" };
+                return BadRequest(response);
+            }
+            catch (InvalidUsernameException e)
+            {
+                var response = new { message = e.Message };
+                return BadRequest(response);
+            }
+
             var user = _mapper.Map<User>(model);
 
             user.PasswordHash = _hasher.HashPassword(model.Password);
@@ -49,9 +76,9 @@ namespace GoLive.Controllers
                 var response = _userService.Authenticate(model);
                 return Ok(response);
             }
-            catch (PasswordMismatchException)
+            catch (IncorrectPasswordException)
             {
-                var response = new { message = "Password Mismatch" };
+                var response = new { message = "Incorrect password" };
                 return BadRequest(response);
             }
             catch (UserNotFoundException)

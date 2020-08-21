@@ -10,7 +10,12 @@ namespace GoLive.MockServices
     {
         public AuthenticateResponse Authenticate(AuthenticateRequest model)
         {
-            throw new System.NotImplementedException();
+            var user = new User
+            {
+                UserId = Guid.NewGuid(),
+                UserName = "fake"
+            };
+            return new AuthenticateResponse(user, "token");
         }
 
         public string CreateUser(User entity)

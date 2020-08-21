@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using AutoMapper;
 using GoLive.Contracts;
@@ -31,30 +32,85 @@ namespace GoLive.Tests
         }
 
         [TestMethod]
-        public void TestValidCreateUserRequestShouldReturnAuthenticateResponse()
+        public void TestValidCreateUserRequestShouldReturnOkResponse()
         {
             var user = new UserCreate
             {
-                UserName = "test",
-                Password = "Test1!",
-                ConfirmPassword = "Test1!"
+                UserName = "testUser",
+                Password = "Tester1!",
+                ConfirmPassword = "Tester1!",
+                Email = "connor@connor.com"
             };
-            var response = _controller.CreateUser(user) as OkObjectResult;
-            var actual = response.Value as AuthenticateResponse;
-            Assert.IsInstanceOfType(actual, typeof(AuthenticateResponse));
-            Assert.AreEqual(actual.Token, "token");
+            var actual = _controller.CreateUser(user);
+            Assert.IsInstanceOfType(actual, typeof(OkObjectResult));
         }
 
         [TestMethod]
         public void TestPasswordMismatchCreateUserRequestShouldReturnBadRequest()
         {
-
+            var user = new UserCreate
+            {
+                UserName = "testUser",
+                Password = "Test1!",
+                Email = "connor@connor.com",
+                ConfirmPassword = "Test!1"
+            };
+            var actual = _controller.CreateUser(user);
+            Assert.IsInstanceOfType(actual, typeof(BadRequestObjectResult));
         }
 
         [TestMethod]
         public void TestInvalidPasswordRequirementsShouldReturnBadRequest()
         {
+            var user = new UserCreate
+            {
+                UserName = "testUser",
+                Password = "foo",
+                Email = "connor@connor.com",
+                ConfirmPassword = "foo"
+            };
+            var actual = _controller.CreateUser(user);
+            Assert.IsInstanceOfType(actual, typeof(BadRequestObjectResult));
+        }
 
+        [TestMethod]
+        public void TestWeakPasswordShouldReturnBadRequest()
+        {
+            var user = new UserCreate
+            {
+                UserName = "testUser",
+                Password = "Tes!",
+                ConfirmPassword = "Tes!",
+                Email = "connor@connor.com"
+            };
+            var actual = _controller.CreateUser(user);
+            Assert.IsInstanceOfType(actual, typeof(BadRequestObjectResult));
+        }
+
+        [TestMethod]
+        public void TestInvalidEmailShouldReturnBadRequest()
+        {
+            var user = new UserCreate
+            {
+                UserName = "testUser",
+                Password = "Test1!",
+                ConfirmPassword = "Test1!",
+                Email = "invalid"
+            };
+            var actual = _controller.CreateUser(user);
+            Assert.IsInstanceOfType(actual, typeof(BadRequestObjectResult));
+        }
+
+        [TestMethod]
+        public void TestValidAuthenticateRequestShouldReturnOk()
+        {
+            var auth = new AuthenticateRequest
+            {
+                Username = "test",
+                Password = "password"
+            };
+            var actual = _controller.Authenticate(auth);
+            Assert.IsInstanceOfType(actual, typeof(OkObjectResult));
         }
     }
 }

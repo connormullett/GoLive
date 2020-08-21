@@ -36,7 +36,7 @@ namespace GoLive.Services
             if (user == null) throw new UserNotFoundException();
 
             if (!_hasher.ValidatePassword(user.PasswordHash, model.Password))
-                throw new PasswordMismatchException();
+                throw new IncorrectPasswordException();
 
             var token = GenerateJwtToken(user);
 
