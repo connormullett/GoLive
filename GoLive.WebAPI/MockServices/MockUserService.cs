@@ -35,6 +35,11 @@ namespace GoLive.MockServices
             return new User();
         }
 
+        public IEnumerable<Project> GetSubscribedProjectsById(Guid userId)
+        {
+            return new List<Project> { new Project() };
+        }
+
         public bool UpdateUser(Guid userId, User user)
         {
             return true;

@@ -50,5 +50,14 @@ namespace GoLive.Services
             _context.ProjectSubscriptions.Add(projectSub);
             return _context.SaveChanges() == 1;
         }
+
+        public void Unsubscribe(Guid userId, int projectId)
+        {
+            var entity = _context.ProjectSubscriptions.SingleOrDefault(
+                x => x.UserId == userId && x.ProjectId == projectId
+            );
+            _context.ProjectSubscriptions.Remove(entity);
+            _context.SaveChanges();
+        }
     }
 }

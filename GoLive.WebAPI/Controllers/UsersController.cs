@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using GoLive.Models.UserDtos;
 using GoLive.Models.Authenticate;
 using System.Threading.Tasks;
+using GoLive.Models.ProjectDtos;
 
 namespace GoLive.Controllers
 {
@@ -110,6 +111,17 @@ namespace GoLive.Controllers
             var entities = _userService.GetAll();
             var users = _mapper.Map<IEnumerable<UserListDto>>(entities);
             var response = new { data = users };
+            return Ok(response);
+        }
+
+        [HttpGet("subscriptions")]
+        [Authorize]
+        public IActionResult GetSubscriptions()
+        {
+            var user = (User)HttpContext.Items["User"];
+            var userId = user.UserId;
+            var projects = _userService.GetSubscribedProjectsById(userId);
+            var response = new { data = projects };
             return Ok(response);
         }
 

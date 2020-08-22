@@ -88,5 +88,12 @@ namespace GoLive.Services
 
             return _context.SaveChanges() == 1;
         }
+
+        public IEnumerable<Project> GetSubscribedProjectsById(Guid userId)
+        {
+            var projects = _context.Projects.Where(x => x.Subscribers
+                .Any(p => p.UserId == userId ));
+            return projects.ToArray();
+        }
     }
 }

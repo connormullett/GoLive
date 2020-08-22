@@ -28,5 +28,10 @@ namespace GoLive.MockServices
         {
             return true;
         }
+
+        public void Unsubscribe(Guid userId, int projectId)
+        {
+            
+        }
     }
 }

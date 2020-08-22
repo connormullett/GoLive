@@ -61,6 +61,16 @@ namespace GoLive.Controllers
             else return BadRequest();
         }
 
+        [HttpPost("{projectId}/unsubscribe")]
+        [Authorize]
+        public IActionResult UnsubscribeToProject(int projectId)
+        {
+            var user = (User)HttpContext.Items["User"];
+            var userId = user.UserId;
+            _projectService.Unsubscribe(userId, projectId);
+            return Ok();
+        }
+
         [HttpGet]
         public IActionResult GetProjects()
         {
