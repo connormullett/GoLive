@@ -151,8 +151,7 @@ namespace GoLive.Tests
                 Email = "test"
             };
             SetControllerHttpContext(user);
-            var userId = Guid.NewGuid();
-            var actual = _controller.UpdateUser(userId);
+            var actual = _controller.UpdateUser(userUpdate);
             Assert.IsInstanceOfType(actual, typeof(OkResult));
         }
     }

@@ -13,6 +13,7 @@ namespace GoLive.Helpers
             CreateMap<UserCreate, User>();
             CreateMap<User, UserListDto>();
             CreateMap<User, UserDto>();
+            CreateMap<UserUpdate, User>();
 
             CreateMap<Project, ProjectListDto>();
             CreateMap<Project, ProjectDto>();
