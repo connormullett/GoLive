@@ -34,5 +34,10 @@ namespace GoLive.MockServices
         {
             return new User();
         }
+
+        public bool UpdateUser(Guid userId, User user)
+        {
+            return true;
+        }
     }
 }

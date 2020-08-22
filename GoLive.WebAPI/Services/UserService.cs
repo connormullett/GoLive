@@ -8,7 +8,6 @@ using GoLive.Contracts;
 using GoLive.Data;
 using GoLive.Exceptions;
 using GoLive.Helpers;
-using GoLive.Models;
 using GoLive.Models.Authenticate;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -74,6 +73,20 @@ namespace GoLive.Services
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
+        }
+
+        public bool UpdateUser(Guid userId, User user)
+        {
+            var entity = _context.Users.SingleOrDefault(x => x.UserId == userId);
+
+            if(entity == null) throw new UserNotFoundException();
+
+            if (user.UserName != null)
+                entity.UserName = user.UserName;
+            if (user.Email != null)
+                entity.Email = user.Email;
+
+            return _context.SaveChanges() == 1;
         }
     }
 }

@@ -3,10 +3,12 @@ using System.Threading.Tasks;
 using AutoMapper;
 using GoLive.Contracts;
 using GoLive.Controllers;
+using GoLive.Data;
 using GoLive.Helpers;
 using GoLive.MockServices;
 using GoLive.Models.Authenticate;
 using GoLive.Models.UserDtos;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -111,6 +113,47 @@ namespace GoLive.Tests
             };
             var actual = _controller.Authenticate(auth);
             Assert.IsInstanceOfType(actual, typeof(OkObjectResult));
+        }
+
+        private void SetControllerHttpContext(User user)
+        {
+            _controller.ControllerContext = new ControllerContext();
+            _controller.ControllerContext.HttpContext = new DefaultHttpContext();
+            _controller.ControllerContext.HttpContext.Items["User"] = user;
+        }
+
+        [TestMethod]
+        public void TestGetUsersShouldReturnOkResult()
+        {
+            var actual = _controller.GetAll();
+            Assert.IsInstanceOfType(actual, typeof(OkObjectResult));
+        }
+
+        [TestMethod]
+        public void TestGetUserByIdShouldReturnOk()
+        {
+            var actual = _controller.GetById(Guid.NewGuid());
+            Assert.IsInstanceOfType(actual, typeof(OkObjectResult));
+        }
+
+        [TestMethod]
+        public void TestUpdateUserShouldReturnOk()
+        {
+            var userUpdate = new UserUpdate
+            {
+                UserName = "foo",
+                Email = "bar"
+            };
+            var user = new User
+            {
+                UserName = "foo",
+                UserId = Guid.NewGuid(),
+                Email = "test"
+            };
+            SetControllerHttpContext(user);
+            var userId = Guid.NewGuid();
+            var actual = _controller.UpdateUser(userId);
+            Assert.IsInstanceOfType(actual, typeof(OkResult));
         }
     }
 }

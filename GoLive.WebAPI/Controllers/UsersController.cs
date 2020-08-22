@@ -112,5 +112,41 @@ namespace GoLive.Controllers
             var response = new { data = users };
             return Ok(response);
         }
+
+        [HttpPut]
+        [Authorize]
+        public IActionResult UpdateUser([FromBody]UserUpdate userModel)
+        {
+            try
+            {
+                _validator.ValidateEmail(userModel.Email);
+                _validator.ValidateUserName(userModel.UserName);
+            }
+            catch (InvalidEmailException)
+            {
+                var response = new { message = "Invalid email" };
+                return BadRequest(response);
+            }
+            catch (InvalidUsernameException e)
+            {
+                var response = new { message = e.Message };
+                return BadRequest(response);
+            }
+
+            var contextUser = (User)HttpContext.Items["User"];
+            var userId = contextUser.UserId;
+
+            var user = _mapper.Map<User>(userModel);
+
+            try
+            {
+                _userService.UpdateUser(userId, user);
+                return Ok();
+            }
+            catch (UserNotFoundException)
+            {
+                return NotFound();
+            }
+        }
     }
 }

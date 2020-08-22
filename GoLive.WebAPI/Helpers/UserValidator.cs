@@ -29,21 +29,36 @@ namespace GoLive.Helpers
                 throw new WeakPasswordException();
             }
             
-            Match emailMatch = _emailValidator.Match(model.Email);
-            if (!emailMatch.Success)
-            {
-                throw new InvalidEmailException();
-            }
+            if (!ValidateEmail(model.Email)) throw new InvalidEmailException();
             
-            if (model.UserName.Length < 5 || model.UserName.Length > 20)
-            {
-                throw new InvalidUsernameException("username must be 5 - 20 characters");
-            }
+            if (!ValidateUserName(model.UserName)) throw new InvalidUsernameException(
+                "Username must be between 6 and 20 characters with no whitespace"
+            );
 
             if (model.UserName.Contains(" "))
             {
                 throw new InvalidUsernameException("username cannot have whitespace");
             }
+        }
+
+        public bool ValidateEmail(string email)
+        {
+            Match emailMatch = _emailValidator.Match(email);
+            return emailMatch.Success ? true : false;
+        }
+
+        public bool ValidateUserName(string username)
+        {
+            if (username.Length < 5 || username.Length > 20)
+            {
+                return false;
+            }
+
+            if (username.Contains(" "))
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
