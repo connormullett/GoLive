@@ -14,5 +14,6 @@ namespace GoLive.Contracts
         void AddOwner(Guid userId, int projectId);
         void RemoveOwner(Guid userId, int projectId);
         IEnumerable<User> GetOwners(int projectId);
+        void UpdateProject(int projectId, Project model);
     }
 }

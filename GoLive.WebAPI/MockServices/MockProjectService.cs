@@ -48,5 +48,10 @@ namespace GoLive.MockServices
         {
             
         }
+
+        public void UpdateProject(int projectId, Project model)
+        {
+            
+        }
     }
 }

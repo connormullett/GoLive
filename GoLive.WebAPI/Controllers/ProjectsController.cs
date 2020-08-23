@@ -109,6 +109,23 @@ namespace GoLive.Controllers
             return Ok(response);
         }
 
+        [HttpPut("{projectId}")]
+        [Authorize]
+        public IActionResult UpdateProject([FromBody]ProjectUpdate projectModel, int projectId)
+        {
+            var user = (User)HttpContext.Items["User"];
+            var userId = user.UserId;
+
+            var project = _projectService.GetProject(projectId);
+            
+            if (project == null) return NotFound();
+            if (project.ProjectCreatorId != userId)
+                return Unauthorized();
+
+            var model = _mapper.Map<Project>(project);
+            _projectService.UpdateProject(projectId, model);
+            return Ok();
+        }
 
         [HttpGet]
         public IActionResult GetProjects()

@@ -87,9 +87,18 @@ namespace GoLive.Services
             _context.SaveChanges();
         }
 
-        void IProjectService.Subscribe(Guid userId, int projectId)
+        public void UpdateProject(int projectId, Project model)
         {
-            throw new NotImplementedException();
+            var entity = _context.Projects.SingleOrDefault(x => x.ProjectId == model.ProjectId);
+
+            if (model.ProjectName != null)
+                entity.ProjectName = model.ProjectName;
+            if (model.ProjectDescription != null)
+                entity.ProjectDescription = model.ProjectDescription;
+            if (model.ProjectExternalUrl != null)
+                entity.ProjectExternalUrl = model.ProjectExternalUrl;
+            
+            _context.SaveChanges();
         }
     }
 }
