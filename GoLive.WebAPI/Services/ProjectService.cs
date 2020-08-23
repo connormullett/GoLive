@@ -21,6 +21,17 @@ namespace GoLive.Services
             _context = context;
         }
 
+        public void AddOwner(Guid userId, int projectId)
+        {
+            var projectOwn = new ProjectOwner
+            {
+                UserId = userId,
+                ProjectId = projectId
+            };
+            _context.ProjectOwners.Add(projectOwn);
+            _context.SaveChanges();
+        }
+
         public bool CreateProject(Project entity)
         {
             _context.Projects.Add(entity);
@@ -39,7 +50,16 @@ namespace GoLive.Services
             else return project;
         }
 
-        public bool Subscribe(Guid userId, int projectId)
+        public void RemoveOwner(Guid userId, int projectId)
+        {
+            var entity = _context.ProjectOwners.SingleOrDefault(
+                x => x.UserId == userId && x.ProjectId == projectId
+            );
+            _context.ProjectOwners.Remove(entity);
+            _context.SaveChanges();
+        }
+
+        public void Subscribe(Guid userId, int projectId)
         {
             var projectSub = new ProjectSubscription
             {
@@ -48,7 +68,7 @@ namespace GoLive.Services
             };
 
             _context.ProjectSubscriptions.Add(projectSub);
-            return _context.SaveChanges() == 1;
+            _context.SaveChanges();
         }
 
         public void Unsubscribe(Guid userId, int projectId)
@@ -58,6 +78,11 @@ namespace GoLive.Services
             );
             _context.ProjectSubscriptions.Remove(entity);
             _context.SaveChanges();
+        }
+
+        void IProjectService.Subscribe(Guid userId, int projectId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using AutoMapper;
 using GoLive.Contracts;
@@ -56,9 +57,8 @@ namespace GoLive.Controllers
         {
             var user = (User)HttpContext.Items["User"];
             var userId = user.UserId;
-            if(_projectService.Subscribe(userId, projectId))
-                return Ok();
-            else return BadRequest();
+            _projectService.Subscribe(userId, projectId);
+            return Ok();
         }
 
         [HttpPost("{projectId}/unsubscribe")]
@@ -70,6 +70,35 @@ namespace GoLive.Controllers
             _projectService.Unsubscribe(userId, projectId);
             return Ok();
         }
+
+        [HttpPost("{projectId}/addowner/{userId}")]
+        [Authorize]
+        public IActionResult AddOwner(int projectId, Guid userId)
+        {
+            var currentUser = (User)HttpContext.Items["User"];
+            var currentUserId = currentUser.UserId;
+            var project = _projectService.GetProject(projectId);
+            
+            if (project.ProjectCreatorId != currentUserId) return Unauthorized();
+
+            _projectService.AddOwner(userId, projectId);
+            return Ok();
+        }
+
+        [HttpPost("{projectId}/removeowner/{userId}")]
+        [Authorize]
+        public IActionResult RemoveOwner(int projectId, Guid userId)
+        {
+            var currentUser = (User)HttpContext.Items["User"];
+            var currentUserId = currentUser.UserId;
+            var project = _projectService.GetProject(projectId);
+            
+            if (project.ProjectCreatorId != currentUserId) return Unauthorized();
+
+            _projectService.RemoveOwner(userId, projectId);
+            return Ok();
+        }
+
 
         [HttpGet]
         public IActionResult GetProjects()

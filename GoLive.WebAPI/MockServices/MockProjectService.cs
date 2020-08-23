@@ -7,6 +7,11 @@ namespace GoLive.MockServices
 {
     public class MockProjectService : IProjectService
     {
+        public void AddOwner(Guid userId, int projectId)
+        {
+            
+        }
+
         public bool CreateProject(Project entity)
         {
             return true;
@@ -24,9 +29,14 @@ namespace GoLive.MockServices
             return new Project();
         }
 
-        public bool Subscribe(Guid userId, int projectId)
+        public void RemoveOwner(Guid userId, int projectId)
         {
-            return true;
+            throw new NotImplementedException();
+        }
+
+        public void Subscribe(Guid userId, int projectId)
+        {
+            
         }
 
         public void Unsubscribe(Guid userId, int projectId)
