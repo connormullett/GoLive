@@ -43,6 +43,13 @@ namespace GoLive.Services
             return _context.Projects;
         }
 
+        public IEnumerable<User> GetOwners(int projectId)
+        {
+            var owners = _context.Users.Where(x => x.OwnedProjects
+                .Any(o => o.ProjectId == projectId));
+            return owners.ToArray();
+        }
+
         public Project GetProject(int id)
         {
             var project = _context.Projects.SingleOrDefault(x => x.ProjectId == id);

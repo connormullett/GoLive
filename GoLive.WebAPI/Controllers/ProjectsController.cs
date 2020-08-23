@@ -7,6 +7,7 @@ using GoLive.Exceptions;
 using GoLive.Helpers;
 using GoLive.Models;
 using GoLive.Models.ProjectDtos;
+using GoLive.Models.UserDtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GoLive.Controllers
@@ -97,6 +98,15 @@ namespace GoLive.Controllers
 
             _projectService.RemoveOwner(userId, projectId);
             return Ok();
+        }
+
+        [HttpGet("{projectId}/getowners")]
+        public IActionResult GetOwners(int projectId)
+        {
+            var entities = _projectService.GetOwners(projectId);
+            var owners = _mapper.Map<UserListDto>(entities);
+            var response = new { data = owners };
+            return Ok(response);
         }
 
 

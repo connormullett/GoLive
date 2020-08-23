@@ -13,5 +13,6 @@ namespace GoLive.Contracts
         void Unsubscribe(Guid userId, int projectId);
         void AddOwner(Guid userId, int projectId);
         void RemoveOwner(Guid userId, int projectId);
+        IEnumerable<User> GetOwners(int projectId);
     }
 }

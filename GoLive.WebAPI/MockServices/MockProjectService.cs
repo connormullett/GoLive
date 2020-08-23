@@ -24,6 +24,11 @@ namespace GoLive.MockServices
             return projectList;
         }
 
+        public IEnumerable<User> GetOwners(int projectId)
+        {
+            return new List<User>() { new User() };
+        }
+
         public Project GetProject(int id)
         {
             return new Project();
