@@ -5,7 +5,6 @@ using GoLive.Contracts;
 using GoLive.Data;
 using GoLive.Exceptions;
 using GoLive.Helpers;
-using GoLive.Models;
 using GoLive.Models.ProjectDtos;
 using GoLive.Models.UserDtos;
 using Microsoft.AspNetCore.Mvc;

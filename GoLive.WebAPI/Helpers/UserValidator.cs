@@ -1,8 +1,6 @@
-using System;
 using System.Text.RegularExpressions;
 using GoLive.Exceptions;
 using GoLive.Models.UserDtos;
-using Microsoft.Extensions.Logging;
 
 namespace GoLive.Helpers
 {
